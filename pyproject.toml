@@ -20,7 +20,7 @@ doc = [
     "sphinx",
     "scanpy",
     "leidenalg",
-    "myst-nb",
-    "sphinx-autoapi",
+    "myst-nb@git+https://github.com/executablebooks/MyST-NB",
+    "sphinx-autoapi>=3.0",
     "sphinx-rtd-theme",
 ]

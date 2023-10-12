@@ -17,11 +17,13 @@ author = u"Maximilian Heeg"
 # ones.
 extensions = [
     "myst_nb",
-    #"autoapi.extension",
     "sphinx.ext.napoleon",
+    "autoapi.extension",
+    "sphinx.ext.autodoc.typehints",
     "sphinx.ext.viewcode",
 ]
-autoapi_dirs = ["../src"]
+autodoc_typehints = 'description'
+autoapi_dirs = ["../src/"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -34,3 +36,13 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
+
+
+def skip_submodules(app, what, name, obj, skip, options):
+    if what == "module":
+        skip = True
+    return skip
+
+
+def setup(sphinx):
+    sphinx.connect("autoapi-skip-member", skip_submodules)

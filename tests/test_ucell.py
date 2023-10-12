@@ -21,19 +21,19 @@ def create_anndata() -> sc.AnnData:
 # tests
 def test_u_score():
     ranks = rank_data()
-    scores = ucell.__u_stat(ranks)
+    scores = ucell._u_stat(ranks)
     assert list(scores) == [0.98, 0.53, 0.12]
 
 
 def test_u_score_maxRank():
     ranks = rank_data()
-    scores = ucell.__u_stat(ranks, maxRank=50)
+    scores = ucell._u_stat(ranks, maxRank=50)
     assert list(scores) == pytest.approx([0.96, 0.346, 0.02], 0.01)
 
 
 def test_u_score_maxRank_2():
     ranks = rank_data()
-    scores = ucell.__u_stat(ranks, maxRank=500)
+    scores = ucell._u_stat(ranks, maxRank=500)
     assert list(scores) == pytest.approx([0.996, 0.906, 0.818], 0.01)
 
 
@@ -41,9 +41,9 @@ def test_calc_score():
     ranks = rank_data()
     ranks = ucell.create_rankings(ranks)
     signatures = {"Sig1": ["A", "C"], "Sig2": ["A-", "C"]}
-    scores = ucell.__calc_score(ranks, signatures["Sig1"])
+    scores = ucell._calc_score(ranks, signatures["Sig1"])
     assert list(scores) == pytest.approx([0.995, 0.995, 1.0], 0.01)
-    scores = ucell.__calc_score(ranks, signatures["Sig2"])
+    scores = ucell._calc_score(ranks, signatures["Sig2"])
     assert list(scores) == pytest.approx([0.02, 0.02, 0.01], 0.01)
 
 
@@ -76,7 +76,7 @@ def test_calc_scores():
 def test_check_signatures():
     signatures = {"Sig1": ["A", "B", "D"], "Sig2": ["C", "B", "D", "E"]}
     with pytest.warns(UserWarning):
-        signatures = ucell.__check_signatures(signatures, ["A", "B", "E"])
+        signatures = ucell._check_signatures(signatures, ["A", "B", "E"])
     expected = {"Sig1": ["A", "B"], "Sig2": ["B", "E"]}
     assert signatures == expected
 
@@ -84,7 +84,7 @@ def test_check_signatures():
 def test_add_to_anndata():
     adata = create_anndata()
     scores = ucell.calc_scores(adata, {"Sig1": ["A", "B"]}, maxRank=2)
-    ucell.__add_to_adata(adata, scores)
+    ucell._add_to_adata(adata, scores)
     assert adata.obs.columns.item() == "UCell_Sig1"
 
 
@@ -97,7 +97,6 @@ def test_add_scores():
 
 def test_raw_and_sparse():
     from scipy.sparse import csr_matrix
-
     adata = create_anndata()
     adata.X = csr_matrix(adata.X)
     adata.raw = adata
