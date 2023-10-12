@@ -21,10 +21,17 @@ def calc_scores(
     Returns:
     - pd.DataFrame: A DataFrame with calculated scores for each gene signature.
     """
+    from scipy.sparse import csr_matrix
     if adata.raw:
-        m = pd.DataFrame(adata.raw.X.todense(), columns=adata.raw.var_names)
+        x  = adata.raw.X
+        columns = adata.raw.var_names
     else:
-        m = pd.DataFrame(adata.X, columns=adata.var_names)
+        x = adata.X
+        columns = adata.var_names
+
+    if isinstance(x, csr_matrix): 
+        x = x.todense()
+    m = pd.DataFrame(x, columns=columns)
 
     signatures = __check_signatures(signatures=signatures, indices=m.columns)
 

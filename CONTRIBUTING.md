@@ -43,10 +43,13 @@ If you are proposing a feature:
 Ready to contribute? Here's how to set up `ucell` for local development.
 
 1. Download a copy of `ucell` locally.
-2. Install `ucell` using `poetry`:
+2. Install `ucell` using `flit` in a new virtual environment:
 
     ```console
-    $ poetry install
+    $ python3 -m venv .venv
+    $ source .venv/bin/activate
+    $ pip install flit
+    $ flit install
     ```
 
 3. Use `git` (or similar) to create a branch for local development and make your changes:
