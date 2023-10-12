@@ -1,0 +1,26 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "ucell"
+authors = [{name = "Maximilian Heeg", email = "mheeg@ucsd.edu"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+dependencies = [
+    "pandas > 2",
+    "anndata > 0.7",
+]
+
+[project.urls]
+Home = "https://github.com/maximilian-heeg/pyUCell"
+
+[project.optional-dependencies]
+test = [
+    "scanpy",
+    "pytest",
+    "pytest-cov",
+]
+doc = ["sphinx", "scanpy", "leidenalg"]
