@@ -24,7 +24,7 @@ jobs:
         run: flit install
 
       - name: Test with pytest
-        run: pytest tests/ 
+        run: pytest tests/ --cov=ucell --cov-report=xml
 
       - name: Use Codecov to track coverage
         uses: codecov/codecov-action@v3
