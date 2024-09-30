@@ -1,9 +1,9 @@
 name: ci
 
-on: [push, pull_request, workflow_dispatch]
+on: [push, workflow_dispatch]
 
 jobs:
-  ci:
+  build:
     # Set up operating system
     runs-on: ubuntu-latest
 
@@ -23,14 +23,6 @@ jobs:
       - name: Install package
         run: flit install
 
-      - name: Test with pytest
-        run: pytest tests/ --cov=ucell --cov-report=xml
-
-      - name: Use Codecov to track coverage
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage.xml # coverage report
-
       - name: Build documentation
         run: make html --directory docs/
 
@@ -42,7 +34,7 @@ jobs:
 
   deploy:
     # Add a dependency to the build job
-    needs: ci
+    needs: build
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
